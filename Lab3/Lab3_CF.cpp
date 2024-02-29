@@ -13,14 +13,13 @@ int main()
     int y = 5;
     
     while(x < y) {
-    printf("%i\n",x);
-
-    if ( x % 2 == 0) {
-        printf("x is greater than y\n");
-    } else {
-        printf(" x is less than or equal to y\n");
-        }
+        printf("%i\n",x);
         x = x + 3;
+    }
+     if ( x % 2 == 0) {
+        printf("x is even \n");
+    } else {
+        printf(" x is odd\n");
     }
     
     return 0;
