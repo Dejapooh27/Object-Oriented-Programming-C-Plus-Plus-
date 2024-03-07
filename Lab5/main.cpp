@@ -21,7 +21,8 @@ int main()
 
     p1.updateHealth(0);
     cout<<p1.getHealth()<<endl;
-
+    printf("0 means that the player is dead and 1 means that the player is alive still\n");
+    
     cout<<p1.isAlive()<<endl;
     cout<<p2.isAlive()<<endl;
 
