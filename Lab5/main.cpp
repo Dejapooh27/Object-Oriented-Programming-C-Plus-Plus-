@@ -8,24 +8,73 @@
 
 using namespace std;
 
+/**
+ * @brief Prints both player's name and their health.
+ * Example Output for names Wiz and NPC
+ * Wiz health: 75 NPC health: 100\n
+ * 
+ * @param player1
+ * @param player2
+ */
+void displayStats (RPG player1, RPG player2){
+cout << player1.getName() << "health" << player1.getHealth() << " ";
+cout << player2.getName () << "health" << player2.getHealth() << endl;
+}
+
+/**
+ * @brief Display who wins based on who is alive. Use an if statement to check whether
+ * player 1 is alive. If so, print that they won, else player 2 won.  
+ * 
+ * Example Output:
+ * Wiz defeated NPC! Good game! /n 
+ * 
+ * @param player1 
+ * @param player2 
+ */
+void displayEnd(RPG player1, RPG player2){
+    if (player1.isAlive()){
+    cout << player1.getName() << "defeated!" << player2.getName() << "Good game! :)" << endl;}
+    else{
+        cout << player2.getName() << "defeated!" << player1.getName() << "Good game! :)" << endl;
+    }
+}
+
+/**
+ * @brief uses a while to check whether both players are alive.
+ * If so, it calls displayStats((*player1), (player2))
+ * Inside the while loop it:
+ * Then prints the name of player one to say that it is their turn 
+ * Then call (*player1).useSkill(player2)
+ * Then prints "------------------\n"
+ * 
+ * Refer to the Role Playing Game Part Two Instructions for the 
+ * example output
+ * @param player1
+ * @param player2
+ */
+
+void gameLoop(RPG * player1, RPG * player2){
+    while((*player1).isAlive() & (*player2).isAlive()) {
+        displayStats((*player1), (*player2));
+        cout << (*player1).getName() << "it is your turn \n" << endl;
+        (*player1).useSkill(player2);
+        cout << "-------------------------------------\n" << endl;
+
+        displayStats((*player1), (*player2));
+         cout << (*player2).getName() << "it is your turn \n" << endl;
+        (*player2).useSkill(player1);
+        cout << "-------------------------------------\n" << endl;
+    }
+
+}
+
+
 int main()
 {
     RPG p1 = RPG("Wiz", 70, 45, 15, "mage");
     RPG p2 = RPG();
 
-    printf("%s Current Stats\n", p1.getName().c_str());
-    printf("Health: %i\t Strength:%i\t Defense: %i\n", p1.getHealth(), p1.getStrength(), p1.getDefense());
-
-    printf("%s Current Stats\n", p2.getName().c_str());
-    printf("Health: %i\t Strength:%i\t Defense: %i\n", p2.getHealth(), p2.getStrength(), p2.getDefense());
-
-    p1.updateHealth(0);
-    cout<<p1.getHealth()<<endl;
-    printf("0 means that the player is dead and 1 means that the player is alive still\n");
-    
-    cout<<p1.isAlive()<<endl;
-    cout<<p2.isAlive()<<endl;
-
-    return 0; 
-
+    gameLoop(&p1, &p2);
+    displayEnd(p1, p2);
+    return 0;
 }

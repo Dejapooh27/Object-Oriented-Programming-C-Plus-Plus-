@@ -1,10 +1,11 @@
 //Lab5_RPG.cpp
 /***
- * {Lab 5 teaches you???}
+* {Lab 5 teaches you???}
  ***/
 
 #include "RPG.h"
 #include <cstdlib>
+#include <iostream>
 using namespace std;
 
  RPG::RPG(){
@@ -111,3 +112,49 @@ int RPG::getStrength() const {
 int RPG::getDefense() const {
     return defense;
     }
+
+/**
+ * @brief attack decreases the opponent's health by (strength - opponent's defense)
+ * In other words, the opponent's defense should soften the blow from the attack 
+ * 
+ * For example, if opponent's health is 100, opponent' defense is 5, and player's 
+ * strength is 20, then after the attack, opponent's health should be 
+ * 85 (i.e 100 - (20-5)).
+ * 
+ * First calculate the opponent's health, then use (*opponent).getUpdate(new_health)
+ * to update their health 
+ * 
+ * @param opponent 
+ */
+void RPG::attack(RPG * opponent){
+    // int new_health = (*opponent).getHealth ();
+    //int new_health = *opponent->getHealth();
+    int new_health = (*opponent).getHealth () - (strength - (*opponent).getDefense());
+    (*opponent).updateHealth(new_health);
+}
+
+/**
+ * @brief Prompts the user to choose a skill and calls printAction() and attack()
+ * 
+ * @param opponent 
+ */
+void RPG::useSkill(RPG * opponent){
+    //use a for loop to print out all the player's skill
+    // i is the index given your for loop 
+    // The value of i should be 0 <= i < SKILL_SIZE
+    for(int i = 0; i <SKILL_SIZE; i ++){
+        printf("Skill %i: %s\n", i, skills[i].c_str());
+    }
+    // create an int called chosen_skill_index
+    // use a print to output "Choose a skill...."
+    int chosen_skill_index;
+    printf("Choose a skill to use: Enter 0 or 1 on the terminal\n");
+    // get user input and assign it to chosen_skill_index
+    cin >> chosen_skill_index;
+    //assigns the chosen_skill into a string called chosen_skill 
+    string chosen_skill = skills[chosen_skill_index];
+    //call printAction(string, RPG) and use chosen_skill and (*opponent)
+    printAction(chosen_skill,(*opponent));
+    // as the parameters
+    attack(opponent);
+}
